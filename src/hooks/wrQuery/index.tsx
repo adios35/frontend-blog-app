@@ -74,9 +74,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const register = (form: RegisterType): AxiosPromise<TregisterResponse> =>
-    credAxios.post("/v1/auth/register", form);
+    credAxios.post("/v1/auth/register", form)
   const logout = (): AxiosPromise =>
-    credAxios.post("/v1/auth/logout", { withCredentials: true });
+    credAxios.post("/v1/auth/logout", {withCredentials:{ headers:{"Authorization":`Bearer ${accessToken}`}}})
   const login = (form: LoginType): AxiosPromise<Tresponse> =>
     credAxios.post("/v1/auth/login", form);
 

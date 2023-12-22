@@ -1,33 +1,29 @@
 
 
 // import  from ''
-import { useQuery } from 'react-query'
+import { useNavigate } from 'react-router-dom'
 import credAxios from '../../api/axios'
 import { useAuth } from '../../hooks/wrQuery'
 import { useEffect, useState } from 'react'
-import UseAxiosPrivate from '../../hooks/UseAxiosPrivate'
 
 const Protected = () => {
+    const navigate = useNavigate()
     const { accessToken } = useAuth()
     const [isLogin, setIsLogin] = useState(false);
     const [error, setError] = useState("");
-    const axiosPrivate = UseAxiosPrivate()
-
-
     useEffect(() => {
         let isMounted = true
         const controller = new AbortController()
-        axiosPrivate.get("/protected", {
+        credAxios.get("/protected", {
             signal: controller.signal,
             headers: {
                 "Authorization": `Bearer ${accessToken}`
             }
-
         }).then(data => {
             console.log(data)
             isMounted && setIsLogin(true)
             setError("")
-        }).catch(err => {
+        }).catch(async (err) => {
             setError(err.response?.data?.message)
             setIsLogin(false)
             console.log(err)
@@ -47,7 +43,7 @@ const Protected = () => {
     return (
         <div className='grid  h-screen w-screen place-items-center bg-gray-700'>
             <h1 className='text-gray-300'>
-                {isLogin ? <h1>you're login</h1> : <h1>{error}</h1>}
+                {isLogin ? <h1>you're login</h1> : <h1>{error || "you're not login"}</h1>}
             </h1>
         </div>
     )

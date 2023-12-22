@@ -1,8 +1,6 @@
-import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authSchema, LoginType } from "../../types/auth";
-import { useApi } from "../../hooks/auth";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/wrQuery";
 import { AxiosError } from "axios";

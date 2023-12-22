@@ -5,6 +5,8 @@ export const authSchema = z.object({
   password: z.string().min(5),
 });
 
+
+
 const register = authSchema
   .extend({
     confirmPassword: z.string(),

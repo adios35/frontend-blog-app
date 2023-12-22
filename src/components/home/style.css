@@ -1,0 +1,22 @@
+.post-wrapper {
+    /* Hide scrollbar for WebKit browsers (e.g., Chrome, Safari) */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer/Edge */
+  
+    /* Hide scrollbar for non-WebKit browsers (Firefox) */
+    scrollbar-width: none;
+    scrollbar-color: transparent transparent; /* Firefox */
+  }
+  
+  .post-wrapper::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for WebKit browsers */
+  }
+  
+.post-wrapper:hover{
+    scrollbar-width: 20px; /* Firefox */
+    -ms-overflow-style: auto; /* Internet Explorer/Edge */
+  
+    /* Hide scrollbar for non-WebKit browsers (Firefox) */
+    scrollbar-width: 10px;
+    scrollbar-color: "#262335"
+}
