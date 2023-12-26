@@ -14,6 +14,7 @@ const App = () => {
   return (
     <div className="pt-10">
       <NavBar />
+        
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="article/:id" element={<SinglePost />} />

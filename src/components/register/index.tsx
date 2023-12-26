@@ -4,9 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterType, authSchema } from "../../types/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { useApi } from "../../hooks/auth";
+import { useAuth } from "../../hooks/wrQuery";
 
 const Register = () => {
-  const { registerUser } = useApi();
+  const { regsiterMutation: { mutate } } = useAuth();
   const [error, setError] = React.useState("");
 
   const navigate = useNavigate();
@@ -19,7 +20,11 @@ const Register = () => {
     resolver: zodResolver(authSchema),
   });
   const submit = async (data: RegisterType) => {
-    registerUser(data, setError);
+    mutate(data, {
+      onError: err => {
+        console.log(err)
+      }
+    });
   };
 
   return (

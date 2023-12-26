@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './style.css';
 import ArticleCard, { Article } from '../postCard';
 import credAxios from '../../api/axios';
@@ -14,15 +14,15 @@ const HomePage: React.FC = () => {
     }, []);
 
     return (
-        <div className="bg-gray-900 md:max-h-[calc(100vh-40px)] md:overflow-y-hidden py-8 px-4 sm:px-8 lg:px-16">
+        <div className="bg-gray-900 md:max-h-[calc(100vh-40px)] min-h-[27rem] md:overflow-y-hidden py-8 px-4 sm:px-8 lg:px-16">
             <div className="flex flex-col sm:flex-row justify-center items-start sm:items-stretch gap-4">
                 {/* Bagian kiri untuk daftar artikel */}
                 <div className="post-wrapper w-full max-h-[calc(100vh-50px)] pb-16  overflow-y-scroll relative items-start sm:w-3/4">
                     <h2 className="text-2xl font-semibold text-blue-300 md:fixed mb-4">Artikel</h2>
-                    {articleData && (articleData.length <= 0) && <h1>belum ada artikel</h1>}
+                    {articleData && (articleData.length <0) && <h1>belum ada artikel</h1>}
                     {articleData ? articleData?.map((article: Article) => (
                         <ArticleCard key={article._id} article={article} />
-                    )) : <h1>loading...</h1>}
+                    )) : <div className="w-full pt-14 text-white"><h1>loading...</h1></div>}
 
                 </div>
                 {/* Bagian kanan untuk iklan */}

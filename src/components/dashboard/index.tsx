@@ -1,15 +1,13 @@
-import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MdHome, MdDashboard } from "react-icons/md"; // Importing icons from react-icons
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import credAxios from "../../api/axios";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "../../hooks/wrQuery";
-import Modal from "./modal";
-import UserPost from "./postCard";
 import { Article } from "../postCard";
+import UserPost from "./postCard";
 
 
 
@@ -18,15 +16,15 @@ const schemaForm = z.object({
     content: z.string().min(10),
     apiError: z.string().optional()
 })
+
 type form = z.infer<typeof schemaForm>
 
 const Dashboard = () => {
     const navigate = useNavigate()
-    const { accessToken } = useAuth()
+    const { accessToken} = useAuth()
     const { data, isLoading: postPending } = useQuery({
         queryFn: () => credAxios.get("/v1/post/posts", { headers: { "Authorization": `Bearer ${accessToken}` } }),
         queryKey: "post",
-
         onSuccess: () => {
             console.log("Data fetched");
         }, onError: (err) => {
@@ -42,7 +40,7 @@ const Dashboard = () => {
                 "Authorization": `Bearer ${accessToken}`
             }
         }),
-        onSuccess: (data) => {
+        onSuccess: () => {
             reset()
             navigate("/")
             alert("post success")
@@ -58,6 +56,7 @@ const Dashboard = () => {
     function submit(form: form) {
         mutate(form)
     }
+
 
     return (
         <div className="flex min-h-screen md:pt-5 pt-20">
@@ -124,7 +123,7 @@ const Dashboard = () => {
                             {postPending && <h1>Loading...</h1>}
                             {
                                 data?.data?.post.map((post: Article) => (
-                                    <li>
+                                    <li key={post._id}>
                                         <UserPost {...post} key={post._id} />
                                     </li>
                                 ))
@@ -133,7 +132,6 @@ const Dashboard = () => {
                     </div>
                 </div>
             </div>
-
             {/* Mobile Bottom Navigation */}
             <nav className="bg-gray-800 text-white w-full fixed top-16 left-0 md:hidden">
                 {/* Navigation Items */}

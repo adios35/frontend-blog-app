@@ -40,9 +40,8 @@ export default function SinglePost() {
     const client = useQueryClient()
     const { id } = useParams();
     const [comment, setComment] = useState("");
+    const { data,isLoading:loadingPage }: UseQueryResult<Post, unknown> = useQuery({
 
-
-    const { data }: UseQueryResult<Post, unknown> = useQuery({
         queryFn: () => fetchPost(id),
         queryKey: "post",
         onSuccess: (data) => data
@@ -64,6 +63,8 @@ export default function SinglePost() {
             <div className="container mx-auto p-4 max-w-3xl">
                 <Link className="hover:underline hover:text-blue-500" to={"/"} >  &lt;-- Home</Link>
                 <h2 className="text-3xl font-bold mb-4">{data?.title}</h2>
+                {loadingPage && <h1>Loading...</h1>}
+                
                 <p className="text-lg mb-4">{data?.content}</p>
                 <small className="text-sm">Author : {data?.author?.email.split("@")[0]}</small>
                 {/* Comment Section */}

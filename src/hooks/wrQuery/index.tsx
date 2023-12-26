@@ -33,6 +33,7 @@ type AuthContextType = {
     },
     unknown
   >;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>
   accessToken: string
 };
 
@@ -76,21 +77,11 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const register = (form: RegisterType): AxiosPromise<TregisterResponse> =>
     credAxios.post("/v1/auth/register", form)
   const logout = (): AxiosPromise =>
-    credAxios.post("/v1/auth/logout", {withCredentials:{ headers:{"Authorization":`Bearer ${accessToken}`}}})
+    credAxios.post("/v1/auth/logout", { withCredentials: { headers: { "Authorization": `Bearer ${accessToken}` } } })
   const login = (form: LoginType): AxiosPromise<Tresponse> =>
     credAxios.post("/v1/auth/login", form);
 
 
-  credAxios.interceptors.response.use((response) => response,
-    async (error) => {
-      const originalRequest = error.config;
-      if (error.response && error.response.status === 401 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        const newAccessToken = (await credAxios.get("/v1/auth/token")).data.accessToken;
-        setAccessToken(newAccessToken)
-      }
-    }
-  )
 
 
 
@@ -132,7 +123,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ setAccessToken, loginMutation, accessToken, login, user, logoutMutation, regsiterMutation }}
+      value={{ setAccessToken, loginMutation, setUser, accessToken, login, user, logoutMutation, regsiterMutation }}
     >
       {children}
     </AuthContext.Provider>
