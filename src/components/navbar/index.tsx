@@ -64,7 +64,8 @@ const NavBar = () => {
             disabled={isLogouting}
             onClick={() => logout()}
             className="bg-blue-500 disabled:bg-gray-300 disabled:cursor-not-allow  scale-75 md:scale-100 -mr-4 md:-mr-0 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg focus:outline-none"
-          >
+            >
+            
             Logout
           </button>
           <Link
