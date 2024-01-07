@@ -1,8 +1,6 @@
-import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Login from "./components/login";
 import Register from "./components/register";
-import NotFound from "./components/404";
 import NavBar from "./components/navbar";
 import HomePage from "./components/home";
 import Protected from "./components/protected";
